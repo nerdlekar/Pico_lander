@@ -148,16 +148,6 @@ function _init()
         h = 2
     }
 
-    terrain ={}
-
-    for x=0,127,8 do
-    add(terrain,{
-        x=x,
-        y=90+rnd(25)
-    })
-    end
-
-    add(terrain,{x=127,y=terrain[#terrain].y})
 
     gravity = 0.05--0.05
     main_thrust = 0.15 --0.12
@@ -186,20 +176,7 @@ function _draw()
     end
      
 
-   
 
-    -- ground
-    for i=1,#terrain-1 do
-
-    line(
-        terrain[i].x,
-        terrain[i].y,
-        terrain[i+1].x,
-        terrain[i+1].y,
-        5
-    )
-
-end 
 
     -- landing pad
     rectfill(
