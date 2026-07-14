@@ -73,6 +73,21 @@ function update_ship()
 
 end
 
+---score calculation
+function calculate_score()
+
+    local fuel_score = flr(ship.fuel)
+    local landing_score = max(0,
+        flr((1 - ship.impact_speed) * 100)
+    )
+
+    return fuel_score + landing_score
+
+end
+
+   
+
+
 -- ground collision
 if not on_pad and ship.y + 8 >= 120 then
 
@@ -217,6 +232,7 @@ function _draw()
 if ship.landed then
 
     print("successful landing!", 20, 40, 11)
+    print("Score: "..calculate_score(), 20, 60, 7)
 
     if ship.impact_speed > 0.65 then
         print("hard landing", 20, 50, 8)
@@ -231,7 +247,8 @@ if ship.landed then
 end
 
 if not ship.alive then
-    print("crashed!", 40, 40, 8)
+    print("crashed!", 45, 40, 8)
+    spr(17, ship.x, ship.y)
 end
 end
 
