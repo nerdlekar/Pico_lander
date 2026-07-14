@@ -164,6 +164,7 @@ end
 function _draw()
 
     cls(1)
+    map()
 
     
     -- ship
