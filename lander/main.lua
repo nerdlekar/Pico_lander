@@ -153,6 +153,10 @@ function _init()
     main_thrust = 0.15 --0.12
     side_thrust = 0.07
 
+    debug_mode = false
+    debug_presses = 0
+    debug_timer = 0
+
 end
 
 ------------------------------
@@ -164,7 +168,7 @@ end
 function _draw()
 
     cls(1)
-    map()
+    map(0,0,0,0,16,16)
 
     
     -- ship
@@ -173,7 +177,15 @@ function _draw()
   -- engine flame
 
     if btn(2) and ship.fuel > 0 then
-    spr(4, ship.x, ship.y + 1)
+    spr(3, ship.x, ship.y + 1)
+    end
+
+    if btn(0) and ship.fuel > 0 then
+    spr(6, ship.x + 4, ship.y + 2)
+    end
+
+    if btn(1) and ship.fuel > 0 then
+    spr(5, ship.x - 4, ship.y + 2)
     end
      
 
@@ -191,13 +203,15 @@ function _draw()
  
 
     -- debug
+
+    if debug_mode then
     print("dx:" .. ship.dx, 0, 0, 7)
     print("dy:" .. ship.dy, 0, 8, 7)
     print ("eng" .. ship.engine,0,16,7)
     print("impact:"..ship.impact_speed, 0, 24, 7)
-    print("lander", 49, 10, 7)
+    print("debug mode", 49, 10, 7)
     print("fuel:" .. flr(ship.fuel), 0, 32, 7)
-
+    end
 
   -- landing/crash messages
 if ship.landed then
@@ -235,5 +249,25 @@ function _update()
             reset_ship()
         end
     end
+
+    if debug_timer > 0 then
+        debug_timer -= 1
+    end
+
+if btnp(5) then
+
+    if debug_timer <= 0 then
+        debug_presses = 0
+    end
+
+    debug_presses += 1
+    debug_timer = 30
+
+    if debug_presses >= 5 then
+        debug_mode = not debug_mode
+        debug_presses = 0
+    end
+
+end
 
 end
